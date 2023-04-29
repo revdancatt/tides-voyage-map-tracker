@@ -1,0 +1,29 @@
+{
+  "name": "tides-voyage-map-tracker",
+  "version": "1.0.0",
+  "description": "A stupid tool to allow me to track treasures",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "run": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://revdancatt@github.com/revdancatt/tides-voyage-map-tracker.git"
+  },
+  "author": "revdancatt",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/revdancatt/tides-voyage-map-tracker/issues"
+  },
+  "homepage": "https://github.com/revdancatt/tides-voyage-map-tracker#readme",
+  "devDependencies": {
+    "standard": "^17.0.0"
+  },
+  "dependencies": {
+    "canvas": "^2.11.2",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.0.7"
+  }
+}

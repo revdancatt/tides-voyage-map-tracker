@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+  {{> head}}
+  <title>Tides: Map maker</title>
+</head>
+
+<body>
+  {{> nav}}
+
+  <section class="hero is-primary">
+    <div class="hero-body shader">
+      <div class="container">
+        <p class="title is-size-1 has-text-weight-bold mb-0">
+          TIDES: Map maker
+        </p>
+        <p class="subtitle has-text-weight-bold pt-5">
+          Helping you track treasures
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section has-background-white">
+    <div class="container">
+      <div class="columns">
+        <div class="column is-three-quarters">
+          <img id="map" src="/imgs/map.png" alt="Map" />
+        </div>
+        <div class="column is-one-quarter">
+          <div id="coords"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="section has-background-white">
+    <div class="container">
+      <form action="/" method="post">
+        <div class="field is-grouped">
+          <div class="control">
+            <input class="input" type="text" name="coords" placeholder="0,0"><br />
+          </div>
+        </div>
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-primary" name="action" value="north">North</button>
+            <button class="button is-primary" name="action" value="south">South</button>
+            <button class="button is-primary" name="action" value="east">East</button>
+            <button class="button is-primary" name="action" value="west">West</button>
+          </div>
+        </div>
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-primary" name="action" value=">2000">No less than 2,000</button>
+            <button class="button is-primary" name="action" value="<2000">Within 2,000</button>
+            <button class="button is-primary" name="action" value="<500">Within 500</button>
+          </div>
+        </div>
+        <!-- Submit button -->
+        <div class="field is-grouped">
+          <div class="control">
+            <button class="button is-warning" name="action" value="new">New map</button>
+            <button type="submit" class="button is-success" name="action" value="save">Go!</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  {{> footer}}
+  <script>
+    // Add the cursor moves over the map image, we want to get the postion and turn it into an x,y coordinate in percent,
+    // which then maps onto the range of -4800 to 4800.
+    const map = document.getElementById('map');
+    const coords = document.getElementById('coords');
+    const mapCords = {
+      x: 0,
+      y: 0
+    }
+    map.addEventListener('mousemove', (e) => {
+      const x = e.offsetX;
+      const y = e.offsetY;
+      const width = map.offsetWidth;
+      const height = map.offsetHeight;
+      const xPercent = Math.round((x / width) * 100);
+      const yPercent = Math.round((y / height) * 100);
+      const xCoord = Math.floor(Math.round((xPercent / 100) * 9600) - 4800);
+      const yCoord = Math.floor(Math.round((yPercent / 100) * 9600) - 4800) * -1;
+      coords.innerHTML = `${xCoord},${yCoord}`;
+      // save the coords
+      mapCords.x = xCoord;
+      mapCords.y = yCoord;
+    });
+    // When the user clicks on the map, we want to save the coords input field
+    map.addEventListener('click', (e) => {
+      const coordsInput = document.querySelector('input[name="coords"]');
+      coordsInput.value = `${mapCords.x},${mapCords.y}`;
+    });
+  </script>
+</body>
+
+</html>
